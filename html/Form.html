@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+    <style>
+        body{
+            background-color:rgba(6, 84, 200, 0.977);
+        }
+        h1{
+            color: white;
+            text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        #origin{
+            border-radius: 5px;
+            background-color: white;
+            width: 50%;
+            box-shadow: 10px 10px 10px rgba(7, 16, 29, 0.977);
+        }
+        .b{
+            background-color: rgba(6, 84, 200, 0.977);
+            width: 15vh;
+            height: 5vh;
+            color: wheat;
+            text-shadow: 0px 0px 5px black;
+        }
+        #popup{
+            display: none;
+            position: fixed;
+            top: 10%;
+            left: 30%;
+            background-color: white;
+            border: 1px solid wheat;
+            box-shadow:10px 10px 10px rgba(7, 16, 29, 0.977);
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Customer Survey Form</h1>
+        <div id="origin">
+            <form name="formN" id="form1">
+                <table cellspacing="10px">
+                    <tr>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="fname" required></td>
+                        <td><input type="text" name="lname" required></td>
+                    </tr>
+                    <tr>
+                        <td>Date of Birth</td>
+                        <td><input type="date" id="dob1" name="dob1" required></td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td><select id="country" name="country" required>
+                            <option value="">Select Country</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Albania">Albania</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="China">China</option>
+                            <option value="Colombia">Colombia</option>
+                            <option value="Denmark">Denmark</option>
+                            <option value="Egypt">Egypt</option>
+                            <option value="France">France</option>
+                            <option value="Hong Kong">Hong Kong</option>
+                            <option value="India">India</option>
+                            <option value="Japan">Japan</option>
+                            <option value="Zimbabwe">Zimbabwe</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gender
+                        </td>
+                        <td>
+                            <input type="checkbox" name="gender" id="c1" onclick="if(this.checked){document.formN.female.checked=false;document.formN.other.checked=false;}"> Male
+                            <input type="checkbox" name="gender" id="c2" onclick="if(this.checked){document.formN.male.checked=false;document.formN.other.checked=false;}"> Female
+                            <input type="checkbox" name="gender" id="c3" onclick="if(this.checked){document.formN.male.checked=false};document.formN.female.checked=false;"> Other
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Profession</td>
+                        <td><input type="text" id="profession" name="profession" required></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="email" id="email" name="email" required></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile Number</td>
+                        <td><input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required></td>
+                    </tr>
+                    <tr>
+                        <td><input class="b" type="reset" id="rb"></td>
+                        <td style="float: right;"><button class="b" type="button" id="sb">Submit</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="popup">
+            <table style="margin: 5px 10px;">
+                <thead><h2>Entered Details</h2></thead>
+                <tr>
+                    <td>First Name</td>
+                    <td id="fn"></td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td id="ln"></td>
+                </tr>
+                <tr>
+                    <td>Date of Birth</td>
+                    <td id="dob"></td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td id="c"></td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td id="g"></td>
+                </tr>
+                <tr>
+                    <td>Profession</td>
+                    <td id="p"></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td id="e"></td>
+                </tr>
+                <tr>
+                    <td>Mobile Number</td>
+                    <td id="m"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><center><button id="closeb" class="b">Close</button></center></td>
+                </tr>
+            </table>
+        </div>
+    </center>
+    <script>
+        const form1=document.getElementById("form1");
+        const closeb=document.getElementById("closeb");
+        const sb=document.getElementById("sb");
+        const rb=document.getElementById("rb");
+        const popup=document.getElementById("popup");
+        var c1=document.getElementById("c1");
+        var c2=document.getElementById("c2");
+        var c3=document.getElementById("c3");
+        sb.addEventListener('click', () => {
+        if (form1.checkValidity()) {
+            const form2=new FormData(form1)
+            var res=" ";
+            if(c1.checked==true)
+            {
+                res="male";
+            }
+            else if(c2.checked==true)
+            {
+                res="female";
+            }
+            else if(c3.checked==true)
+            {
+                res="Other";
+            }
+            else
+            {
+                res="not mentioned";
+            }
+            document.getElementById('fn').textContent = form2.get('fname');
+            document.getElementById('ln').textContent = form2.get('lname');
+            document.getElementById('dob').textContent = form2.get('dob1');
+            document.getElementById('c').textContent = form2.get('country');
+            document.getElementById('g').textContent = res;
+            document.getElementById('p').textContent = form2.get('profession');
+            document.getElementById('e').textContent = form2.get('email');
+            document.getElementById('m').textContent = form2.get('mobile');
+            popup.style.display = 'block';
+    }});
+    closeb.addEventListener('click', () =>{ popup.style.display="none";form1.reset(); });
+    </script>
+</body>
+</html>
